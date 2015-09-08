@@ -56,6 +56,33 @@ $(document).bind('keydown', 'alt+J', function () {
 
 // Toggle not exceed frame
 $(document).bind('keydown', 'alt+P', function () {
+
+	// Switch to presentation mode
+	if($(".slides").hasClass("borderNotExceed")){
+		$(".draggable").draggable("destroy");
+		$(".resizable").resizable("destroy");
+
+		$("body").attr("spellcheck","false");
+
+		$("div, h1").each(function(index,element){
+			if ($(element).attr("contenteditable") == "true")
+				$(element).attr("contenteditable","false");
+		});
+	}
+	// Switch to editor
+	else{
+		$("body").attr("spellcheck","true");
+
+		$(".draggable").draggable({ grid: [ 5, 5 ] });
+		$(".resizable").resizable({ aspectRatio: true	});
+
+		$("div, h1").each(function(index,element){
+			if ($(element).attr("contenteditable") == "false")
+				$(element).attr("contenteditable","true");
+		});
+	}
+
+
 	$(".slides").toggleClass("borderNotExceed");
 	$("body").toggleClass("checkerboardDark");
 });
