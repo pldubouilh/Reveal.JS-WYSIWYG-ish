@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Presentation</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/beige.css" id="theme">
+		<link rel="stylesheet" href="css/jquery-ui.css">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+
+	<body>
+
+		<div class="reveal" id="downloadID">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<div contenteditable="true" class="UberTitle"></div>
+
+				<section class="center">
+					<div class="hiddenTitle" style="display:none;"></div>
+					<h1 contenteditable="true">Title</h1>
+					<div contenteditable="true">
+						Author
+						<br />
+						Date
+					</div>
+				</section>
+
+				<section>
+					<div class="hiddenTitle" style="display:none;"> Slide Title </div>
+					<div contenteditable="true" class="draggable content"> Content </div>
+				</section>
+
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery-ui.min.js"></script>
+		<script src="js/jquery-hotkey.js"></script>
+		<script src="js/reveal-js-wysiwyg-ish.js"></script>
+
+
+	</body>
+</html>
