@@ -72,10 +72,18 @@ $(document).bind('keydown', 'alt+z', function () {
 	dragging();
 });
 
-// Center things >> TODO IMAGES
+// Center things
 $(document).bind('keydown', 'alt+v', function () {
 	$("section.present").children().each(function( index ) {
-		$(this).css("left", ($("section.present").width() - $(this).width())/2 );
+
+		// Some fine jquery dark magic over here !
+		// image
+		if( $(this).hasClass("item") )
+			$(this).children(".draggable").first().css("left", Math.floor(($("section.present").width() - $(this).find("img").first().width())/2) );
+
+		// text
+		else
+			$(this).css("left", ($("section.present").width() - $(this).width())/2 );
 	});
 });
 
