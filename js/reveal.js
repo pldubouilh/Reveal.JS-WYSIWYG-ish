@@ -218,15 +218,16 @@
 			'&#8592;/&#8594;  ,  H/L':		'Navigate left/right',
 			'&#8593;/&#8595;  ,  K/J':		'Navigate up/down',
 			'Alt + s' : 'Download current page',
-			'Alt + a' : 'Pops up a new paragraph',
-			'Alt + z' : 'Pops up a new fragment paragraph',
+			'Alt + r' : 'Remove image or paragraph <br/> Delete slide if empty',
+			'Alt + a' : 'New paragraph',
+			'Alt + z' : 'New fragment paragraph',
 			'Alt + n' : 'New slide on the left',
 			'Alt + i' : 'New centered slide',
 			'Alt + p' : 'Toggle editor view',
 			'Alt + j/k' : 'Shift slide on the right/left',
 			'B  ,  .':				'Pause',
 			'F':					'Fullscreen',
-			'ESC, O':				'Slide overview'
+			'O':				'Slide overview'
 		};
 
 
@@ -3732,9 +3733,10 @@
 	 * Handler for the document level 'keypress' event.
 	 */
 	function onDocumentKeyPress( event ) {
-
 		// Check if the pressed key is question mark
-		if( event.shiftKey && event.charCode === 63 ) {
+
+		// bad hack is bad
+		if( false ) {
 			if( dom.overlay ) {
 				closeOverlay();
 			}
@@ -3742,6 +3744,7 @@
 				showHelp( true );
 			}
 		}
+
 
 	}
 
@@ -3849,7 +3852,7 @@
 			event.preventDefault && event.preventDefault();
 		}
 		// ESC or O key
-		else if ( ( event.keyCode === 27 || event.keyCode === 79 ) && features.transforms3d ) {
+		else if ( ( event.keyCode === 79 ) && features.transforms3d ) {
 			if( dom.overlay ) {
 				closeOverlay();
 			}
