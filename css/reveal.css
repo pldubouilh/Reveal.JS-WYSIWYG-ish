@@ -1107,7 +1107,9 @@ body {
   width: 200px;
   padding: 10px;
   border: 1px solid #fff;
-  vertical-align: middle; }
+  vertical-align: middle;
+  color: white;
+ }
 
 .reveal .overlay.overlay-help .viewport .viewport-inner table th {
   padding-top: 20px;
