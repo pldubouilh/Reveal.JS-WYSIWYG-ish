@@ -1,11 +1,10 @@
 /* Cool things TODO :
 
-	> priority
++ Refresh index (again)
 
-		+ Display new fragment ASAP
+> More WYSIWYG friendly stuff (meh)
 
-	> More WYSIWYG friendly stuff (meh)
-
+		+ right click, group (meh)
 		+ Cool overview slide when slides moved
 		+ Snap things, middle & stuff
 		+ alt l/r/c on div for center left right position
@@ -36,13 +35,19 @@ Reveal.initialize({
 	]
 });
 
-
 // Init in editor
 modeEditorOn();
 
 // Title editable, & stored inside slide on each keystroke
 $( ".UberTitle" ).keyup(function() {
 	$("section.present > div.hiddenTitle").html($(".UberTitle").html());
+});
+
+// Detect paste and update ubertitle. Bad hack is bad
+$(document).on('paste', '.UberTitle', function(event) {
+	window.setInterval(function(){
+		$("section.present > div.hiddenTitle").html($(".UberTitle").html());
+	}, 10);
 });
 
 
@@ -57,19 +62,25 @@ $(document).on('keydown', false, 'esc', function(event) {
 	$(".overlay").hide(); // hide help if required
 });
 
+
 // New Paragraph - editor only
-$(document).bind('keydown', 'alt+A', function () {
+function newPar(){
 	if(! $(".slides").hasClass("borderNotExceed")) return
-	$("section.present").append("<div class=\"draggable textZone\" contenteditable=\"true\" style=\"position: absolute; left: 425px; top: 310px\">New Paragraph</div>");
+	$("section.present").append("<div class=\"draggable textZone\" contenteditable=\"true\" style=\"position: absolute; left: 357px; top: 310px\">New Paragraph</div>");
 	dragging();
+}
+
+$(document).bind('keydown', 'alt+A', function () {
+	newPar();
 });
 
 
 // New Paragraph / fragment - editor only
 $(document).bind('keydown', 'alt+z', function () {
 	if(! $(".slides").hasClass("borderNotExceed")) return
-	$("section.present").append("<div class=\"draggable fragment textZone\" contenteditable=\"true\"style=\"position: absolute; left: 425px; top: 310px\">New Paragraph</div>");
+	$("section.present").append("<div class=\"draggable fragment textZone\" contenteditable=\"true\"style=\"position: absolute; left: 256px; top: 310px\">New Fragmented Paragraph</div>");
 	dragging();
+	Reveal.nextFragment();
 });
 
 // Center things
@@ -87,14 +98,14 @@ $(document).bind('keydown', 'alt+v', function () {
 	});
 });
 
-// Move to next
+// Move to next position
 $(document).bind('keydown', 'alt+K', function () {
 	$("section.present").next("section").removeClass("future").addClass("past");
 	$("section.present").insertAfter($("section.present").next("section"));
 });
 
 
-// Move to previous
+// Move to previous position
 $(document).bind('keydown', 'alt+J', function () {
 	$("section.present").prev("section").removeClass("past").addClass("future");
 	$("section.present").insertBefore($("section.present").prev("section"));
@@ -107,10 +118,11 @@ $(document).bind('keydown', 'alt+N', function (){
 
 	$("section.present").after("<section class=\"future\" aria-hidden=\"true\" style=\"\
 	display:none;\" hidden=\"\"><div class=\"hiddenTitle\" style=\"display:none;\">Slide Title</div>\
-	<div contenteditable=\"true\" class=\"draggable textZone\" style=\"position: absolute; left: 425px; top:\
+	<div contenteditable=\"true\" class=\"draggable textZone\" style=\"position: absolute; left: 414px; top:\
 	310px\">Content</div></section>");
-
 	dragging();
+
+	Reveal.navigateNext();
 });
 
 
@@ -126,95 +138,91 @@ $(document).bind('keydown', 'alt+I', function (){
 });
 
 
-// Remove some stuff if available ...
+// Remove text ...
 $(document).on('keydown', 'div, h1', 'alt+R', function(event) {
-	// Image selected ? Remove !
-	if (imgFocus != null)
-		$(imgFocus).parent().parent().remove();
-
-	// no image ? remove text if selected !
-  else if( this.contentEditable == "true")
+	// remove text if selected !
+  if( this.contentEditable == "true")
     $(this).remove();
 });
 
-// ...Remove slide if empty
+
+//  Remove slide if empty
 $(document).on('keydown', null, 'alt+R', function(event) {
+	// slide empty ? remove
 	if($("section.present").children().length == 1){
+		// Switch stuff, and update title
 		var toRemove = $("section.present")
 		toRemove.prev("section").removeClass("past").addClass("present");
 		toRemove.removeClass("present").remove();
+		$(".UberTitle").html($(".present > .hiddenTitle").html());
 	}
 });
 
 
 // Blur if escape pressed on a contentEditable
 $(document).on('keyup', 'h1, div', function(event) {
-	if(event.which == 27){
-		if( this.contentEditable == "true" ){
+	if(event.which == 27)
+		if( this.contentEditable == "true" )
 			$(this).blur();
-			return;
+});
+
+
+// Text clicked/unclicked >> Disable/re-enable drag
+$(document).on('focus', '.textZone', function(event) {
+  	flagClick = true; // prevent new par on dblclick
+		if($(this).hasClass("ui-draggable"))
+  		$(this).draggable("destroy");
+});
+$(document).on('blur', '.textZone', function(event) {
+	var zoom = $('.slides').css('zoom');
+	flagClick = false;
+
+	$(this).draggable({
+		start: function( event, ui ) {
+			$(this).css("transition", "none");
+		},
+		stop: function( event, ui ) {
+			$(this).css("transition", "all 0.2s ease");
+		},
+		cursor: "move",
+		// Hack to remove effect of the zoom
+		drag: function(evt,ui) {
+			var factor = (1 / zoom) -1 ;
+			ui.position.top += Math.round((ui.position.top - ui.originalPosition.top) * factor);
+			ui.position.left += Math.round((ui.position.left- ui.originalPosition.left) * factor);
 		}
-		else
-			deselectImage(); // auto check if something is to be deselected
-
-	}
+	});
 });
 
 
-// Get keystroke - action on delete/backspace
-/*
-$(document).on('keydown', 'body', function(event) {
-	if(event.which == 46 || event.which == 8){
+/* ******* click click click ********** */
 
-		// Delete image if one's selected
-		if (imgFocus != null){
-			console.log('delImg');
-			$(imgFocus).parent().parent().remove();
-			event.preventDefault();
-		}
-	}
+var flagClick = false;
+
+// Disable new par when dblclick (uber) title
+$(document).on('focus', '.UberTitle, h1', function(event) {
+	flagClick = true; // prevent new par on dblclick
 });
-*/
-
-
-/* *********** Image selection/deselection ************ */
-
-var flag = false;
-var imgFocus = null;
-
-
-function deselectImage(){
-	if (imgFocus != null){
-		$(imgFocus).css("border-color","rgba(79, 64, 28, 0)");
-		imgFocus = null
-	}
-}
-
-// Remove img selection if something else clicked
-$(document).on('mousedown', '.slides', function(event) {
-	if (flag == true) return; // bad hack is bad
-	deselectImage();
+$(document).on('blur', '.UberTitle, h1', function(event) {
+	flagClick = false;
 });
 
-// Image clicked
-$(document).on('mousedown', '.ui-wrapper', function(event) {
-	if (imgFocus != this){
-		imgFocus = this
-		$(imgFocus).css("border-color","rgba(79, 64, 28, 0.99)");
-	}
+// New par on doubleclick
+$(document).on('dblclick', '.slides', function(event) {
+	if(flagClick) return;
+	newPar();
+});
 
-	// bad bad bad bad bad bad bad bad
-	// Wee delay to prevent two events to occur
-	flag = true
+// Remove image when doubleclick'in
+$(document).on('dblclick', '.ui-wrapper', function(event) {
+
+	$(this).parent().parent().remove();
+	imgFocus = null;
+
+	flagClick = true
 	window.setInterval(function(){
-		flag = false
+		flagClick = false
 	}, 10);
-});
-
-// Left / right > deselect image
-$(document).on('keyup', 'body', function(event) {
-	if(event.which == 39 || event.which == 37)
-		deselectImage();
 });
 
 
@@ -299,7 +307,8 @@ function dragging(){
 }
 
 
-/* ******** Drag and drop ******* */
+/* ************ Drag and drop *********** */
+
 var dropper = document.getElementById("downloadID");
 dropper.ondragover = function () { return false; };
 dropper.ondragend = function () { return false; };
@@ -332,7 +341,7 @@ function fileLoaded(filename, dataUri) {
 		div.appendChild(imgDiv);
 	}
 
-	$("section.present").append(div);
-	dragging();
+	var newImg = $("section.present").append(div);
 	$(".resizable").resizable({ aspectRatio: true	});
+	dragging();
 }

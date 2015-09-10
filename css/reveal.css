@@ -590,12 +590,6 @@ body {
 .reveal.page .slides section.past {
   z-index: 12; }
 
-.ui-wrapper{
-  border-width: 3px !important;
-  border-style: solid !important;
-  border-color: rgba(79, 64, 28, 0);
-
-}
 
 
 .reveal.page .slides section:not(.stack):before {
@@ -1091,7 +1085,7 @@ body {
 .reveal .overlay.overlay-help .viewport .viewport-inner {
   width: 600px;
   margin: 0 auto;
-  padding: 60px;
+  padding: 5px;
   text-align: center;
   letter-spacing: normal; }
 

@@ -36,6 +36,9 @@ body {
 .borderNotExceed{
   border: 3px solid !important;
 }
+.ui-wrapper{
+  position: absolute !important;
+}
 
 .reveal {
   font-family: 'Lato', sans-serif;
