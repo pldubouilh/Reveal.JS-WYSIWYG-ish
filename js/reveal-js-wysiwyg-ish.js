@@ -45,7 +45,7 @@ $( ".UberTitle" ).keyup(function() {
 
 // Detect paste and update ubertitle. Bad hack is bad
 $(document).on('paste', '.UberTitle', function(event) {
-	window.setInterval(function(){
+	window.setInterval(function(){ //paste fires before the actual pasting
 		$("section.present > div.hiddenTitle").html($(".UberTitle").html());
 	}, 10);
 });
@@ -210,7 +210,19 @@ $(document).on('blur', '.UberTitle, h1', function(event) {
 // New par on doubleclick
 $(document).on('dblclick', '.slides', function(event) {
 	if(flagClick) return;
-	newPar();
+
+	var offset = $(".slides").offset();
+	var factor = (1 / $(".slides").css("zoom")) ;
+
+	var mousePos = {
+			left: (factor * event.pageX) - (offset.left),
+			top:  (factor * event.pageY) - (offset.top)
+	};
+
+	if(! $(".slides").hasClass("borderNotExceed")) return
+	$("section.present").append("<div class=\"draggable textZone\" contenteditable=\"true\" style=\"position: absolute; left: "+ mousePos.left +"px; top: "+ mousePos.top +"px;\">New Paragraph</div>");
+	dragging();
+
 });
 
 // Remove image when doubleclick'in
