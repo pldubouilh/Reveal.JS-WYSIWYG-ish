@@ -48,7 +48,7 @@ body {
 
 ::selection {
   color: #fff;
-  background: rgba(79, 64, 28, 0.99);
+  background: rgba(79, 64, 28, 0.60);
   text-shadow: none; }
 
 .reveal .slides > section, .reveal .slides > section > section {

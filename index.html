@@ -25,14 +25,15 @@
 			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
 		</script><link rel="stylesheet" type="text/css" href="css/print/paper.css">
+		<a href="https://github.com/pldubouilh/Reveal.JS-WYSIWYG-ish"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
+
 	</head>
 
 	<body spellcheck="false" class="" style="transition: -webkit-transform 0.8s ease; cursor: auto;">
-		<a href="https://github.com/pldubouilh/Reveal.JS-WYSIWYG-ish"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
 		<div class="reveal fade" id="downloadID" role="application" data-transition-speed="default" data-background-transition="fade">
-
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides" style="width: 960px; height: 700px; zoom: 0.987187;">
+
 				<div contenteditable="false" class="UberTitle"></div>
 
 				<section class="center present" style="top: 106.5px; display: block;">
@@ -50,7 +51,7 @@
 
 			</div>
 
-			<div style="display:none; " class="overlay overlay-help visible"><header><a class="close" href="#"><span class="icon"></span></a></header><div class="viewport"><div class="viewport-inner"><p class="title">Keyboard Shortcuts</p><br><table><tbody><tr><th>KEY</th><th>ACTION</th></tr><tr><td>←/→  ,  H/L</td><td>Navigate left/right</td></tr><tr><td>↑/↓  ,  K/J</td><td>Navigate up/down</td></tr><tr><td>Alt + s</td><td>Download current page</td></tr><tr><td>Alt + r</td><td>Remove paragraph <br> Delete slide if empty</td><tr><td>Double click on image</td><td>Remove image</td></tr></tr><tr><td>Alt + a</td><td>New paragraph</td></tr><tr><td>Alt + v</td><td>Center horiz. elements</td></tr><tr><td>Alt + z</td><td>New fragment paragraph</td></tr><tr><td>Alt + n</td><td>New slide on the left</td></tr><tr><td>Alt + i</td><td>New centered slide</td></tr><tr><td>Alt + p</td><td>Toggle editor view</td></tr><tr><td>Alt + j/k</td><td>Shift slide on the right/left</td></tr><tr><td>B  ,  .</td><td>Pause</td></tr><tr><td>F</td><td>Fullscreen</td></tr><tr><td>O</td><td>Slide overview</td></tr></tbody></table></div></div></div>
+			<div style="display:none; " class="overlay overlay-help visible"><header><a class="close" href="#"><span class="icon"></span></a></header><div class="viewport"><div class="viewport-inner"><p class="title">Keyboard Shortcuts</p><br><table><tbody><tr><th>KEY</th><th>ACTION</th></tr><tr><td>←/→  ,  H/L</td><td>Navigate left/right</td></tr><tr><td>↑/↓  ,  K/J</td><td>Navigate up/down</td></tr><tr><td>Alt + s</td><td>Download current page</td></tr><tr><td>Alt + r</td><td>Remove paragraph <br> Delete slide if empty</td><tr><td>Double click on image</td><td>Remove image</td></tr></tr><tr><td>Alt + a or double click on slide</td><td>New paragraph</td></tr><tr><td>Alt + z</td><td>New fragment paragraph</td></tr><tr><td>Alt + l</td><td>Align text left/center</td></tr><tr><td>Alt + v</td><td>Center horiz. elements</td></tr><tr><td>Alt + n</td><td>New slide on the left</td></tr><tr><td>Alt + i</td><td>New centered slide</td></tr><tr><td>Alt + p</td><td>Toggle editor view</td></tr><tr><td>Alt + j/k</td><td>Shift slide on the right/left</td></tr><tr><td>B  ,  .</td><td>Pause</td></tr><tr><td>F</td><td>Fullscreen</td></tr><tr><td>O</td><td>Slide overview</td></tr></tbody></table></div></div></div>
 		<div class="backgrounds"><div class="slide-background center present" data-loaded="true" style="display: block;"></div><div class="slide-background future" data-loaded="true" style="display: block;"></div></div><div class="progress" style="display: block;"><span style="width: 0px;"></span></div><aside class="controls" style="display: block;"><div class="navigate-left"></div><div class="navigate-right enabled"></div><div class="navigate-up"></div><div class="navigate-down"></div></aside><div class="slide-number"></div><div class="pause-overlay"></div><div id="aria-status-div" aria-live="polite" aria-atomic="true" style="position: absolute; height: 1px; width: 1px; overflow: hidden; clip: rect(1px 1px 1px 1px);">
 
 					Reveal.jsWYSIWYG~ish
@@ -62,6 +63,7 @@
 		<script src="js/jquery.js"></script>
 		<script src="js/jquery-ui.min.js"></script>
 		<script src="js/jquery-hotkey.js"></script>
+		<script src="js/download.js"></script>
 		<script src="js/reveal-js-wysiwyg-ish.js"></script><script type="text/javascript" src="plugin/zoom-js/zoom.js"></script><script type="text/javascript" src="plugin/notes/notes.js"></script>
 
 

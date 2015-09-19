@@ -54,6 +54,9 @@ body {
   background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
 }
 
+.textZone{
+  line-height: 1.65em !important;
+}
 /*********************************************
  * VIEW FRAGMENTS
  *********************************************/
@@ -237,7 +240,7 @@ body {
 .reveal .progress {
   position: fixed;
   display: none;
-  height: 3px;
+  height: 5px;
   width: 100%;
   bottom: 0;
   left: 0;
