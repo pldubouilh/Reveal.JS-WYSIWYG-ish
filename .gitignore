@@ -1,0 +1,5 @@
+*.html
+!base_cdn.html
+!base.html
+!index.html
+decktape/

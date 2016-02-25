@@ -41,44 +41,44 @@ Reveal.initialize({
 
 
 // Title editable, & stored inside slide on each keystroke
-$( ".UberTitle" ).keyup(function() {
-	$("section.present > div.hiddenTitle").html($(".UberTitle").html());
+$('.UberTitle').keyup(function() {
+	$('section.present > div.hiddenTitle').html($('.UberTitle').html());
 });
 
 // Detect paste and update ubertitle. Bad hack is bad
 $(document).on('paste', '.UberTitle', function(event) {
 	window.setInterval(function(){ //paste fires before the actual pasting
-		$("section.present > div.hiddenTitle").html($(".UberTitle").html());
+		$('section.present > div.hiddenTitle').html($('.UberTitle').html());
 	}, 10);
 });
 
 // Display/dissmiss help if needed
 $(document).bind('keydown', 'alt+h', function () {
-	$(".overlay").toggle();
+	$('.overlay').toggle();
 });
-$( ".close" ).click(function() {
-	$(".overlay").toggle();
+$('.close').click(function() {
+	$('.overlay').toggle();
 });
 
 // Escape CBs
 $(document).on('keydown', false, 'esc', function(event) {
-	$(".overlay").hide(); // hide help if required
+	$('.overlay').hide(); // hide help if required
 });
 
 // Blur if escape pressed on a contentEditable
 $(document).on('keyup', 'h1, div', function(event) {
 	if(event.which == 27)
-		if( this.contentEditable == "true" )
+		if( this.contentEditable == 'true')
 			$(this).blur();
 });
 
 
 // New Paragraph - editor only
 function newPar(){
-	if(! $(".slides").hasClass("borderNotExceed")) return
-	$("section.present").append("<div class=\"draggable textZone\" \
-	 contenteditable=\"true\" style=\"position: absolute; left: 357px; top: \
-	 310px\">New Paragraph</div>");
+	if(! $('.slides').hasClass('borderNotExceed')) return
+	$('section.present').append('<div class="draggable textZone" \
+	 contenteditable="true" style="position: absolute; left: 357px; top: \
+	 310px">New Paragraph</div>');
 
 	dragging();
 }
@@ -90,52 +90,52 @@ $(document).bind('keydown', 'alt+A', function () {
 
 // New Paragraph / fragment - editor only
 $(document).bind('keydown', 'alt+z', function () {
-	if(! $(".slides").hasClass("borderNotExceed")) return
+	if(! $('.slides').hasClass('borderNotExceed')) return
 
-	$("section.present").append("<div class=\"draggable fragment textZone\" \
-	 contenteditable=\"true\"style=\"position: absolute; left: 256px; top: \
-	 310px\">New Fragmented Paragraph</div>");
+	$('section.present').append('<div class="draggable fragment textZone" \
+	 contenteditable="true"style="position: absolute; left: 256px; top: \
+	 310px">New Fragmented Paragraph</div>');
 
 	dragging();
 	Reveal.nextFragment();
 });
 
 
-function centerThatText(that){
-	$(that).css("left", ($("section.present").width() - $(that).width())/2 );
+function centerThatText(that, evt){
+	$(that).css('left', ($('section.present').width() - $(that).width())/2 );
 }
 
 // Center things
-$(document).bind('keydown', 'alt+v', function () {
-	$("section.present").children().each(function( index ) {
-
+$(document).bind('keydown', 'alt+v', function (e) {
+	$('section.present').children().each(function( index ) {
 		// Some fine jquery dark magic over here !
 		// image
-		if( $(this).hasClass("item") )
-			$(this).children(".draggable").first().css("left", Math.floor(($("section.present").width() - $(this).find("img").first().width())/2) );
+		if( $(this).hasClass('item') )
+			$(this).children('.draggable').first().css('left', Math.floor(($('section.present').width() - $(this).find('img').first().width())/2) )
 
 		// text
 		else
-			centerThatText(this);
+			centerThatText(this, e)
 	});
 });
 
 // Center only editable when focused
 $(document).on('keydown', 'div, h1', 'alt+v', function(event) {
-	centerThatText(this);
+	centerThatText(this)
+	event.preventDefault()
 });
 
 // Press next/prev through all fragments (if any) till end of current slide
 // bad hack is bad !
 function nextTillFragmentsOver(){
 
-	var that = $("section.present")
-	while (that.hasClass("present"))
+	var that = $('section.present')
+	while (that.hasClass('present'))
 		Reveal.navigateRight()
 }
 function prevTillFragmentsOver(){
-	var that = $("section.present")
-	while (that.hasClass("present"))
+	var that = $('section.present')
+	while (that.hasClass('present'))
 		Reveal.navigateLeft()
 }
 
@@ -148,8 +148,8 @@ function resetOverview(){
 
 // Move to next position
 $(document).bind('keydown', 'alt+K', function () {
-	$("section.present").next("section").removeClass("future").addClass("past");
-	$("section.present").insertAfter($("section.present").next("section"));
+	$('section.present').next('section').removeClass('future').addClass('past');
+	$('section.present').insertAfter($('section.present').next('section'));
 	nextTillFragmentsOver();
 	resetOverview();
 });
@@ -157,8 +157,8 @@ $(document).bind('keydown', 'alt+K', function () {
 
 // Move to previous position
 $(document).bind('keydown', 'alt+J', function () {
-	$("section.present").prev("section").removeClass("past").addClass("future");
-	$("section.present").insertBefore($("section.present").prev("section"));
+	$('section.present').prev('section').removeClass('past').addClass('future');
+	$('section.present').insertBefore($('section.present').prev('section'));
 	prevTillFragmentsOver();
 	resetOverview();
 });
@@ -166,17 +166,17 @@ $(document).bind('keydown', 'alt+J', function () {
 
 // New Slide - editor only
 $(document).bind('keydown', 'alt+N', function (){
-	if(! $(".slides").hasClass("borderNotExceed")) return
+	if(! $('.slides').hasClass('borderNotExceed')) return
 
 	// Copy previous slide name if available
-	var title = $("section.present > .hiddenTitle").text();
+	var title = $('section.present > .hiddenTitle').text();
 	if (title.length === 0 || title === undefined)
 		title = "New Slide";
 
-	$("section.present").after("<section class=\"future\" aria-hidden=\"true\" style=\"\
-  	display:none;\" hidden=\"\"><div class=\"hiddenTitle\" style=\"display:none;\">"
-		+ title  + "</div><div contenteditable=\"true\" class=\"draggable textZone\" \
-		style=\"position: absolute; left: 414px; top:310px\"> Content</div></section>");
+	$('section.present').after('<section class="future" aria-hidden="true" style=" \
+		display:none;" hidden=""><div class="hiddenTitle" style="display:none;">' + title  + ' \
+		</div><div contenteditable="true" class="draggable textZone" \
+		style="position: absolute; left: 414px; top:310px"> Content</div></section>');
 
 	dragging();
 	nextTillFragmentsOver();
@@ -185,12 +185,12 @@ $(document).bind('keydown', 'alt+N', function (){
 
 // New Slide Center  - editor only
 $(document).bind('keydown', 'alt+I', function (){
-	if(! $(".slides").hasClass("borderNotExceed")) return
+	if(! $('.slides').hasClass('borderNotExceed')) return
 
-	$("section.present").after("<section class=\"future center\" aria-hidden=\"true\" style=\"\
-	display:none;\" hidden=\"\"><div class=\"hiddenTitle\" style=\"display:none;\"></div>\
-	<h1 contenteditable=\"true\" style=\"font-size: 1.9em\" class=\"draggable \
-	textZone\">Important stuff</h1></section>");
+	$('section.present').after('<section class="future center" aria-hidden="true" style="\
+	display:none;" hidden=""><div class="hiddenTitle" style="display:none;"></div>\
+	<h1 contenteditable="true" style="font-size: 1.9em" class="draggable \
+	textZone">Important stuff</h1></section>');
 
 	dragging();
 	nextTillFragmentsOver();
@@ -200,7 +200,7 @@ $(document).bind('keydown', 'alt+I', function (){
 // Remove text ...
 $(document).on('keydown', 'div, h1', 'alt+R', function(event) {
 	// remove text if selected !
-  if( this.contentEditable == "true")
+  if( this.contentEditable == 'true')
     $(this).remove();
 });
 
@@ -208,25 +208,27 @@ $(document).on('keydown', 'div, h1', 'alt+R', function(event) {
 //  Remove slide if empty
 $(document).on('keydown', null, 'alt+R', function(event) {
 	// slide empty ? remove
-	if($("section.present").children().length == 1){
+	if($('section.present').children().length == 1){
 		// Switch stuff, and update title
-		var toRemove = $("section.present")
-		toRemove.prev("section").removeClass("past").addClass("present");
-		toRemove.removeClass("present").remove();
-		$(".UberTitle").html($(".present > .hiddenTitle").html());
+		var toRemove = $('section.present')
+		toRemove.prev('section').removeClass('past').addClass('present');
+		toRemove.removeClass('present').remove();
+		$('.UberTitle').html($('.present > .hiddenTitle').html());
 	}
 });
 
 
 // Text-align on the left/center
 $(document).on('keydown', '.textZone', 'alt+l', function(event) {
-	var align = $(this).css("text-align")
+	var align = $(this).css('text-align')
 
-	if (align == "left")
-		$(this).css("text-align", "center")
+	if (align == 'left')
+		$(this).css('text-align', 'center')
 
-	else if (align == "center")
-		$(this).css("text-align", "left")
+	else if (align == 'center')
+		$(this).css('text-align', 'left')
+
+	event.preventDefault();
 });
 
 
@@ -249,19 +251,19 @@ $(document).on('blur', '.UberTitle, h1', function(event) {
 $(document).on('dblclick', '.slides:not(.textZone)', function(event) {
 	if(flagClick) return;
 
-	var offset = $(".slides").offset();
-	var factor = (1 / $(".slides").css("zoom")) ;
+	var offset = $('.slides').offset();
+	var factor = (1 / $('.slides').css('zoom')) ;
 
 	var mousePos = {
 			left: (factor * event.pageX) - (offset.left),
 			top:  (factor * event.pageY) - (offset.top)
 	};
 
-	if(! $(".slides").hasClass("borderNotExceed")) return
-	$("section.present").append("<div class=\"draggable textZone\" \
-	 contenteditable=\"true\" style=\"position: absolute; \
-	 left: "+ mousePos.left +"px; top: "+ mousePos.top +"px;\"> \
-	 New Paragraph</div>");
+	if(! $('.slides').hasClass('borderNotExceed')) return
+	$('section.present').append('<div class="draggable textZone" \
+	 contenteditable="true" style="position: absolute; \
+	 left: ' + mousePos.left + 'px; top:' + mousePos.top + 'px;"> \
+	 New Paragraph</div>');
 
 	dragging();
 });
@@ -284,8 +286,8 @@ $(document).on('dblclick', '.ui-wrapper', function(e) {
 $(document).on('click', '.textZone', function(event) {
   	flagClick = true; // prevent new par on dblclick
 
-		if($(this).hasClass("ui-draggable"))
-  		$(this).draggable("destroy");
+		if($(this).hasClass('ui-draggable'))
+  		$(this).draggable('destroy');
 });
 $(document).on('blur', '.textZone', function(event) {
 	var zoom = $('.slides').css('zoom');
@@ -296,12 +298,12 @@ $(document).on('blur', '.textZone', function(event) {
 
 	$(this).draggable({
 		start: function( event, ui ) {
-			$(this).css("transition", "none");
+			$(this).css('transition', 'none');
 		},
 		stop: function( event, ui ) {
-			$(this).css("transition", "all 0.2s ease");
+			$(this).css('transition', 'all 0.2s ease');
 		},
-		cursor: "move",
+		cursor: 'move',
 		// Hack to remove effect of the zoom
 		drag: function(evt,ui) {
 			var factor = (1 / zoom) -1 ;
@@ -316,44 +318,44 @@ $(document).on('blur', '.textZone', function(event) {
 
 
 function disableEditing(){
-	$(".draggable").draggable("destroy");
-	$(".resizable").resizable("destroy");
-	$("body").attr("spellcheck","false");
+	$('.draggable').draggable('destroy');
+	$('.resizable').resizable('destroy');
+	$('body').attr('spellcheck','false');
 
-	$("div, h1").each(function(index,element){
-		if ($(element).attr("contenteditable") == "true")
-			$(element).attr("contenteditable","false");
+	$('div, h1').each(function(index,element){
+		if ($(element).attr('contenteditable') == 'true')
+			$(element).attr('contenteditable','false');
 	});
 }
 
 function enableEditing(){
 	dragging();
-	$(".resizable").resizable({ aspectRatio: true	});
+	$('.resizable').resizable({ aspectRatio: true	});
 
-	$("div, h1").each(function(index,element){
-		if ($(element).attr("contenteditable") == "false")
-			$(element).attr("contenteditable","true");
+	$('div, h1').each(function(index,element){
+		if ($(element).attr('contenteditable') == 'false')
+			$(element).attr('contenteditable','true');
 	});
 
 }
 
 function modeEditorOff(){
 	disableEditing();
-	$(".slides").removeClass("borderNotExceed");
-	$("body").removeClass("checkerboardDark");
+	$('.slides').removeClass('borderNotExceed');
+	$('body').removeClass('checkerboardDark');
 }
 
 
 function modeEditorOn(){
 	enableEditing();
-	$(".slides").addClass("borderNotExceed");
-	$("body").addClass("checkerboardDark");
+	$('.slides').addClass('borderNotExceed');
+	$('body').addClass('checkerboardDark');
 }
 
 
 // Switch to presentation/editor mode
 $(document).bind('keydown', 'alt+P', function () {
-	if($(".slides").hasClass("borderNotExceed"))
+	if($('.slides').hasClass('borderNotExceed'))
 		modeEditorOff();
 	else
 		modeEditorOn();
@@ -373,13 +375,13 @@ $(document).bind('keydown', 'alt+S', function () {
 	modeEditorOff();
 
 	// Try to get a name
-	var title = $(".slides").children("section").first().children("h1").first().text();
+	var title = $('.slides').children('section').first().children('h1').first().text();
 
 	// Save
 	if (title !== undefined && title.length > 0)
-		download(document.documentElement.innerHTML, title + ".html", "text/html");
+		download(document.documentElement.innerHTML, title + '.html', 'text/html');
 	else
-	  download(document.documentElement.innerHTML, "slides.html", "text/html");
+	  download(document.documentElement.innerHTML, 'slides.html', 'text/html');
 
 	modeEditorOn();
 });
@@ -395,14 +397,14 @@ $(window).bind('beforeunload', function(){
 function dragging(){
 	var zoom = $('.slides').css('zoom');
 
-	$(".draggable").draggable({
+	$('.draggable').draggable({
 		start: function( event, ui ) {
-			$(this).css("transition", "none");
+			$(this).css('transition', 'none');
 		},
 		stop: function( event, ui ) {
-			$(this).css("transition", "all 0.2s ease");
+			$(this).css('transition', 'all 0.2s ease');
 		},
-		cursor: "move",
+		cursor: 'move',
 		// Hack to remove effect of the zoom
 		drag: function(evt,ui) {
 	    var factor = (1 / zoom) -1 ;
@@ -416,7 +418,7 @@ function dragging(){
 
 /* ************ Drag and drop *********** */
 
-var dropper = document.getElementById("downloadID");
+var dropper = document.getElementById('downloadID');
 dropper.ondragover = function () { return false; };
 dropper.ondragend = function () { return false; };
 
@@ -434,13 +436,13 @@ dropper.ondrop = function (e) {
 };
 
 function fileLoaded(filename, dataUri) {
-	var div = document.createElement("div");
+	var div = document.createElement('div');
 	div.className = 'item';
 
 	if(/^data:image/.test(dataUri)) {
-		var imgDiv = document.createElement("div");
+		var imgDiv = document.createElement('div');
 		imgDiv.className = 'draggable';
-		var img = document.createElement("img");
+		var img = document.createElement('img');
 		img.src = dataUri;
 		img.className = 'resizable';
 		img.style['width'] = '300px';
@@ -448,7 +450,7 @@ function fileLoaded(filename, dataUri) {
 		div.appendChild(imgDiv);
 	}
 
-	var newImg = $("section.present").append(div);
-	$(".resizable").resizable({ aspectRatio: true	});
+	var newImg = $('section.present').append(div);
+	$('.resizable').resizable({ aspectRatio: true	});
 	dragging();
 }
