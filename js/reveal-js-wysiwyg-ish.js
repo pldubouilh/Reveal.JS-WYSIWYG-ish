@@ -128,7 +128,6 @@ $(document).on('keydown', 'div, h1', 'alt+v', function(event) {
 // Press next/prev through all fragments (if any) till end of current slide
 // bad hack is bad !
 function nextTillFragmentsOver(){
-
 	var that = $('section.present')
 	while (that.hasClass('present'))
 		Reveal.navigateRight()
@@ -148,19 +147,25 @@ function resetOverview(){
 
 // Move to next position
 $(document).bind('keydown', 'alt+K', function () {
-	$('section.present').next('section').removeClass('future').addClass('past');
-	$('section.present').insertAfter($('section.present').next('section'));
-	nextTillFragmentsOver();
-	resetOverview();
+	Reveal.toggleOverview(true)
+	setTimeout(function () {
+		$('section.present').next('section').removeClass('future').addClass('past');
+		$('section.present').insertAfter($('section.present').next('section'));
+		nextTillFragmentsOver();
+		resetOverview();
+	}, 50);
 });
 
 
 // Move to previous position
 $(document).bind('keydown', 'alt+J', function () {
-	$('section.present').prev('section').removeClass('past').addClass('future');
-	$('section.present').insertBefore($('section.present').prev('section'));
-	prevTillFragmentsOver();
-	resetOverview();
+	Reveal.toggleOverview(true)
+	setTimeout(function () {
+		$('section.present').prev('section').removeClass('past').addClass('future');
+		$('section.present').insertBefore($('section.present').prev('section'));
+		prevTillFragmentsOver();
+		resetOverview();
+	}, 50);
 });
 
 
