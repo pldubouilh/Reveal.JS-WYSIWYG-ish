@@ -1,0 +1,77 @@
+.UberTitle {
+  transition: all 500ms cubic-bezier(0.420, 0.000, 0.580, 1.000);
+  transition-timing-function: cubic-bezier(0.420, 0.000, 0.580, 1.000);
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index:500;
+  font-size: 1.8em !important;
+  background-color: rgba(231, 173, 82, .25)
+}
+
+.content{
+  line-height: 1.7em;
+}
+
+.borderNotExceed{
+  border: 3px solid !important;
+}
+
+.ui-wrapper{
+  position: absolute !important;
+}
+
+.checkerboardWhite{
+  background-image: linear-gradient(white 2px, transparent 0px),
+  linear-gradient(90deg, white 1px, transparent 1px),
+  linear-gradient(rgba(255,255,255,.2) 1px, transparent 0px),
+  linear-gradient(90deg, rgba(255,255,255,.2) 1px, transparent 0px);
+  background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
+}
+
+.checkerboardDark{
+  background-image:
+  /* main lines*/
+  linear-gradient(rgba(0,0,0,.5) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0,0,0,.5) 1px, transparent 1px),
+  /* Sub lines */
+  linear-gradient(rgba(0,0,0,.1) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0,0,0,.1) 1px, transparent 1px);
+  background-size:100px 100px, 100px 100px, 20px 20px, 20px 20px;
+  background-position:-2px -2px, -2px -2px, -1px -1px, -1px -1px
+}
+
+.textZone{
+  line-height: 1.65em !important;
+}
+
+.reveal img{
+  position: static !important;
+}
+
+.dlHelper{
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+  background-color: rgba(122, 122, 122, 0.7);
+  padding: 20px !important;
+  transition: all 500ms cubic-bezier(0.420, 0.000, 0.580, 1.000);
+  color: white;
+  border-radius: 7px;
+  font-size: 24px !important;
+}
+
+/* Ensure certain elements are never larger than the slide itself */
+/* Buggy with resizable */
+.reveal img, .reveal video, .reveal iframe {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.reveal section img {
+  margin: 0px 0px;
+  background: none;
+  border: 0px;
+  box-shadow: none;
+}

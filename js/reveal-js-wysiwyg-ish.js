@@ -38,7 +38,7 @@ Reveal.initialize({
 
 
 // Init in editor
-//modeEditorOn();
+modeEditorOn();
 
 
 // Title editable, & stored inside slide on each keystroke
@@ -376,6 +376,23 @@ Reveal.addEventListener('overviewhidden',function(event){
 });
 
 
+var socket = io();
+var timeOutDl
+
+socket.on('isDlOk', function(payload){
+	if (payload === 'ok'){
+		clearTimeout(timeOutDl)
+
+		$('.dlHelper').css('opacity', '1')
+		setTimeout(function () {
+			$('.dlHelper').css('opacity', '0')
+		}, 1300);
+
+		modeEditorOn();
+	}
+});
+
+
 // Save
 $(document).bind('keydown', 'alt+S', function () {
 	modeEditorOff();
@@ -383,13 +400,27 @@ $(document).bind('keydown', 'alt+S', function () {
 	// Try to get a name
 	var title = $('.slides').children('section').first().children('h1').first().text();
 
-	// Save
-	if (title !== undefined && title.length > 0)
-		download(document.documentElement.innerHTML, title + '.html', 'text/html');
-	else
-	  download(document.documentElement.innerHTML, 'slides.html', 'text/html');
+	if (title === undefined)
+	  var title = 'AmazingSlides'+ new Date().getDate() + '/' + new Date().getDay()
 
-	modeEditorOn();
+
+	// Trying local saving
+	socket.emit('dlPage', {
+		content: document.documentElement.innerHTML,
+		name: title
+	});
+
+	// Timeout to local stuff otherwise
+	timeOutDl = setTimeout(function (title) {
+		console.log('Timeout ! Saving locally');
+
+		if (title !== undefined && title.length > 0)
+			download(document.documentElement.innerHTML, title + '.html', 'text/html');
+		else
+		  download(document.documentElement.innerHTML, 'slides.html', 'text/html');
+
+		modeEditorOn();
+	}, 3*1000);
 });
 
 
